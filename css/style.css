@@ -1,9 +1,22 @@
 #board {
-  background-color: #ccc;
+  background-color:gray;
   border: 2px solid black;
 }
 
 #board td {
   width: 16px;
   height: 16px;
+}
+
+
+td {
+  background-color: gray;
+}
+
+.snake{
+  background-color: #222 !important;
+}
+
+#food {
+  background-color: black;
 }
