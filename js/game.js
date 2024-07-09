@@ -7,10 +7,10 @@
   let board;
   let snake;
   let food;
-
-  console.log(food);
+  let score;
 
   function init() {
+    score = new Score();
     board = new Board(SIZE);
     snake = new Snake([
       [4, 4],
@@ -23,10 +23,12 @@
 
   function reset() {
     const table = document.getElementById("board");
-    alert("Game Over!");
-    // table.remove();
+    const scoreElement = document.getElementById("score");
+    table.remove();
+    scoreElement.remove()
     clearInterval(intervalId);
-    // init();
+    score.show()
+    init();
   }
 
   window.addEventListener("keydown", (e) => {
@@ -54,6 +56,23 @@
         break;
     }
   });
+
+
+
+  class Score {
+    constructor(){
+      this.max = 0;
+      this.actual = 0;
+      const scoreElement = document.createElement('p')
+      scoreElement.setAttribute('id', 'score')
+      scoreElement.innerHTML = `Sua pontuação: ${this.actual}`
+      document.body.appendChild(scoreElement)
+    }
+
+    show(){
+      alert('Game Over\nSua pontuação foi: '+this.actual)
+    }
+  }
 
   class Board {
     constructor(size) {
@@ -104,7 +123,6 @@
           break;
       }
 
-      console.log("a");
       if (
         newHead[0] < 0 ||
         newHead[0] > SIZE ||
@@ -130,6 +148,9 @@
       ) {
         // Increase snake size
         this.body.unshift([...this.body[0]]);
+        const scoreElement = document.getElementById('score')
+
+        scoreElement.innerHTML = `Sua pontuação: ${food.type === 'food-black' ? score.actual+= 1 : score.actual+=2}`;
         
         document.querySelector(
           `#board tr:nth-child(${food.position[0]}) td:nth-child(${food.position[1]})`
@@ -153,9 +174,11 @@
       const x = Math.floor(Math.random() * SIZE);
       const y = Math.floor(Math.random() * SIZE);
 
+      this.type = (Math.floor(Math.random()) * 2) === 0 ? "food-black" : "food-red";
+
       document.querySelector(
         `#board tr:nth-child(${x}) td:nth-child(${y})`
-      ).id = "food";
+      ).id = this.type
 
       return [x, y];
     }

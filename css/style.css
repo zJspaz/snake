@@ -17,6 +17,10 @@ td {
   background-color: #222 !important;
 }
 
-#food {
+#food-black {
   background-color: black;
+}
+
+#food-red {
+  background-color: red;
 }
